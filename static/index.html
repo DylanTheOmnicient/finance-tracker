@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Финансовый трекер</title>
+  <script>
+    // Регистрируем Service Worker для офлайн-доступа и возможности установки
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+  </script>
+</head>
+<body>
+  <div id="app">
+    <!-- Шапка -->
+    <header>
+      <h1>💰 Финансовый трекер</h1>
+      <div id="balance-display">Баланс: <span id="balance">0</span> ₽</div>
+    </header>
+
+    <!-- Форма добавления транзакции -->
+    <section id="add-form">
+      <h2>Добавить</h2>
+      <div class="radio-group">
+        <label><input type="radio" name="type" value="income" checked> Доход</label>
+        <label><input type="radio" name="type" value="expense"> Расход</label>
+      </div>
+      <input type="number" id="amount" placeholder="Сумма" step="0.01" required>
+      <select id="category"></select>
+      <input type="text" id="note" placeholder="Заметка (опционально)">
+      <button id="submit-btn">✅ Записать</button>
+    </section>
+
+    <!-- Список транзакций -->
+    <section id="transactions-section">
+      <h2>Последние операции</h2>
+      <div id="transactions-list">Загрузка...</div>
+    </section>
+  </div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

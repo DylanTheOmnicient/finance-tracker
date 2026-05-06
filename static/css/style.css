@@ -1,0 +1,70 @@
+:root {
+  --income-color: #4CAF50;
+  --expense-color: #F44336;
+  --bg: #f9f9f9;
+  --card-bg: #ffffff;
+  --text: #333;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  margin: 0;
+  padding: 16px;
+  color: var(--text);
+  max-width: 600px;
+  margin: auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#balance {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+#add-form, #transactions-section {
+  background: var(--card-bg);
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.radio-group {
+  margin-bottom: 12px;
+}
+
+input, select, button {
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+button {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.transaction-item .amount {
+  font-weight: bold;
+}
+
+.income { color: var(--income-color); }
+.expense { color: var(--expense-color); }
