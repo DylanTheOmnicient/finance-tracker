@@ -32,3 +32,8 @@ class TransactionOut(BaseModel):
 
 class BalanceOut(BaseModel):
     balance: float
+
+class ResetResponse(BaseModel):
+    message: str
+    balance: float
+    deleted_count: int

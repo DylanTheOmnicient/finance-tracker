@@ -19,3 +19,12 @@ def list_transactions(skip: int = 0, limit: int = 50, db: Session = Depends(get_
 def balance(db: Session = Depends(get_db)):
     """Текущий баланс."""
     return {"balance": crud.get_balance(db)}
+
+@router.post("/reset", response_model=schemas.ResetResponse)
+def reset_all_data(db: Session = Depends(get_db)):
+    deleted = crud.reset_transactions(db)
+    return {
+        "message": f"Удалено {deleted} транзакций. Баланс обнулён.",
+        "balance": 0.0,
+        "deleted_count": deleted
+    }

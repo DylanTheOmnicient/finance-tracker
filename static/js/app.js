@@ -70,3 +70,27 @@ document.addEventListener('DOMContentLoaded', () => {
   loadCategories();
   refreshDashboard();
 });
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+    if (confirm('Вы уверены? Все транзакции будут удалены безвозвратно. Баланс станет 0.')) {
+        resetData();
+    }
+});
+
+async function resetData() {
+    try {
+        const response = await fetch('/api/reset', { method: 'POST' });
+        const result = await response.json();
+        if (response.ok) {
+            alert(result.message);
+            // Обновляем баланс и список транзакций на экране
+            document.getElementById('balance').textContent = '0';
+            document.getElementById('transactions').innerHTML = '';
+        } else {
+            alert('Ошибка сброса: ' + result.detail);
+        }
+    } catch (error) {
+        console.error('Ошибка сети:', error);
+        alert('Не удалось выполнить сброс. Проверьте соединение.');
+    }
+}

@@ -47,3 +47,12 @@ def get_balance(db: Session) -> float:
                 .filter(models.Transaction.type == "expense")\
                 .scalar()
     return income - expense
+
+def reset_transactions(db: Session):
+    """
+    Удаляет все транзакции. Баланс после этого = 0.
+    Возвращает количество удалённых записей.
+    """
+    num_deleted = db.query(models.Transaction).delete()
+    db.commit()
+    return num_deleted

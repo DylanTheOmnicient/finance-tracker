@@ -3,6 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.database import Base, get_db
 from app.main import app
+from sqlalchemy.orm import Session
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test_api.db"
 engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
@@ -53,3 +54,17 @@ def test_balance():
     resp = client.get("/api/balance/")
     assert resp.status_code == 200
     assert "balance" in resp.json()
+
+def test_reset(client: TestClient, db_session: Session):
+    # сначала добавляем пару транзакций
+    # ...
+    response = client.post("/api/reset")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["balance"] == 0
+    assert data["deleted_count"] == 2
+
+    # Проверяем, что база пуста
+    from app.crud import get_transactions
+    txs = get_transactions(db_session)
+    assert len(txs) == 0
