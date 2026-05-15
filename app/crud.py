@@ -11,18 +11,23 @@ def get_categories(db: Session, category_type: str | None = None):
 
 def seed_default_categories(db: Session):
     """Заполняет БД категориями, если их ещё нет."""
-    if db.query(models.Category).first() is None:
-        defaults = [
-            models.Category(name="Зарплата", type="income"),
-            models.Category(name="Подработка", type="income"),
-            models.Category(name="Продукты", type="expense"),
-            models.Category(name="Транспорт", type="expense"),
-            models.Category(name="Развлечения", type="expense"),
-            models.Category(name="Коммунальные платежи", type="expense"),
-            models.Category(name="Прочее", type="expense"),
-        ]
-        db.add_all(defaults)
-        db.commit()
+    defaults = [
+        models.Category(name="Зарплата", type="income"),
+        models.Category(name="Подработка", type="income"),
+        models.Category(name="Прочее", type="income"),
+        models.Category(name="Продукты", type="expense"),
+        models.Category(name="Транспорт", type="expense"),
+        models.Category(name="Развлечения", type="expense"),
+        models.Category(name="Коммунальные платежи", type="expense"),
+        models.Category(name="Прочее", type="expense"),
+    ]
+    for cat_data in defaults:
+        exists = db.query(models.Category).filter_by(
+            name=cat_data.name, type=cat_data.type
+        ).first()
+        if not exists:
+            db.add(cat_data)
+    db.commit()
 
 # ------------- Транзакции -------------
 def create_transaction(db: Session, tx: schemas.TransactionCreate) -> models.Transaction:
